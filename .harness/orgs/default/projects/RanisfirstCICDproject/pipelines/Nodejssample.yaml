@@ -1,0 +1,55 @@
+pipeline:
+  name: Nodejs-sample
+  identifier: Nodejssample
+  projectIdentifier: RanisfirstCICDproject
+  orgIdentifier: default
+  tags: {}
+  stages:
+    - stage:
+        name: nodejs-CI
+        identifier: nodejsCI
+        description: ""
+        type: CI
+        spec:
+          cloneCodebase: true
+          caching:
+            enabled: true
+            override: true
+          buildIntelligence:
+            enabled: true
+          infrastructure:
+            type: KubernetesDirect
+            spec:
+              connectorRef: GKEConnector
+              namespace: harness-delegate-ng
+              automountServiceAccountToken: true
+              nodeSelector: {}
+              os: Linux
+          execution:
+            steps:
+              - step:
+                  type: Run
+                  name: Install Dependencies
+                  identifier: Install_Dependencies
+                  spec:
+                    connectorRef: account.harnessImage
+                    image: node:20-alpine
+                    shell: Sh
+                    command: |-
+                      set -e
+
+                      echo "Installing Node.js dependencies"
+
+                      if [ -f package-lock.json ]; then
+                      npm ci
+                      else
+                      npm install
+                      fi
+
+                      echo "Dependencies installed successfully"
+  properties:
+    ci:
+      codebase:
+        connectorRef: Harnessgithubrepo
+        repoName: Harness-Nodejs-CICD
+        build: <+input>
