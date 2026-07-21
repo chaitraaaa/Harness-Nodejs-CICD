@@ -29,6 +29,18 @@ pipeline:
             steps:
               - step:
                   type: Run
+                  name: Search packagejson
+                  identifier: Search_packagejson
+                  spec:
+                    connectorRef: DockerConnector
+                    image: node:20-alpine
+                    shell: Sh
+                    command: |-
+                      pwd
+                      ls -la
+                      find /harness -name package.json
+              - step:
+                  type: Run
                   name: Install Dependencies
                   identifier: Install_Dependencies
                   spec:
