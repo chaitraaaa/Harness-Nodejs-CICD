@@ -32,7 +32,7 @@ pipeline:
                   name: Install Dependencies
                   identifier: Install_Dependencies
                   spec:
-                    connectorRef: account.harnessImage
+                    connectorRef: DockerConnector
                     image: node:20-alpine
                     shell: Sh
                     command: |-
