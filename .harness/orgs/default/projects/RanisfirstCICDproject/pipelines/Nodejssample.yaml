@@ -69,7 +69,9 @@ pipeline:
                     connectorRef: DockerConnector
                     image: node:20-alpine
                     shell: Sh
-                    command: npm run build
+                    command: |-
+                      cd nodejs-cicd-demo
+                      npm run build
   properties:
     ci:
       codebase:
