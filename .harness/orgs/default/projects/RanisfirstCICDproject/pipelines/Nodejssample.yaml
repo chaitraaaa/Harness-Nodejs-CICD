@@ -61,6 +61,15 @@ pipeline:
                       fi
 
                       echo "Dependencies installed successfully"
+              - step:
+                  type: Run
+                  name: npm_Build
+                  identifier: npm_Build
+                  spec:
+                    connectorRef: DockerConnector
+                    image: node:20-alpine
+                    shell: Sh
+                    command: npm run build
   properties:
     ci:
       codebase:
